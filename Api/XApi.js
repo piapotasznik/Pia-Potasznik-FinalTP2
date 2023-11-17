@@ -26,7 +26,26 @@ class XApi {
 
   create = async (info) => {
     try {
+      //validar la info
       const data = await this.factory.xDao.create(info);
+      return await data;
+    } catch (error) {
+      throw error;
+    }
+  };
+  getAll = async () => {
+    try {
+      //validar la info
+      const data = await this.factory.xDao.getAll();
+      return await data;
+    } catch (error) {
+      throw error;
+    }
+  };
+  getAmount = async (amount) => {
+    try {
+      //validar la info
+      const data = await this.factory.xDao.getAmount(amount);
       return await data;
     } catch (error) {
       throw error;
