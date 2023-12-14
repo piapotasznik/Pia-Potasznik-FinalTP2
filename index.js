@@ -3,12 +3,17 @@ import { SERVER_PORT } from "./config/config.js";
 import router from "./routes/router.js";
 import generalError from "./Midlewares/GeneralError.js";
 
-const app = express();
+// BORRAR..
+//utiliza el framework Express.js para crear un servidor web
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+const app = express();  // Creo el servidor
 
-app.use("/api", router);
+app.use(express.json());  //borrar. usa el md express.json() para permitir que la aplicación procese datos en formato JSON.
+app.use(express.urlencoded({ extended: true })); 
+
+app.use("/api", router); //borrar. especifica que todas las rutas definidas en el objeto router estarán
+//bajo el prefijo "/api". Por ejemplo, si hay una ruta en router llamada "/users", se accederá a ella 
+//como "/api/users".
 
 app.use(generalError)
 

@@ -1,4 +1,4 @@
-import XMemoryDao from "./Memory/XMemoryDao.js";
+import XMemoryDao from "./Memory/YMemoryDao.js";
 
 class Factory {
   constructor() {}
