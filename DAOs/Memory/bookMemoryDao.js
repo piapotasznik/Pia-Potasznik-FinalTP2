@@ -1,32 +1,62 @@
-class XMemoryDao{
+import {sendNotification} from "../utils/validations.js";
+
+class bookMemoryDao{
      constructor(){
-          this.memory = ["kuka", "canela"];
+          this.memory = [];
      }
 
-     create = async (info) => {
+        create = async (book) => {
           try {
-            this.memory.push(info);
-            return await info;
+            this.memory.push(book);
+            return await book;
           } catch (error) {
             throw error;
           }
         };
-     getAll = async () => {
+      
+        getAll = async () => {
           try {
-           const info= await this.memory.join(" ")
-            return info;
+            const books = [...this.memory];
+            return books;
           } catch (error) {
             throw error;
           }
         };
-        getAmount= async (amount) => {
+      
+        remove = async (code) => {
           try {
-           const info= await fetch(`https://texto.deno.dev/palabras?cantidad=${amount}`)
-           const data= await info.json()
-            return data;
+            const index = this.memory.findIndex((book) => book.code === code);
+      
+            if (index !== -1) {
+              const removedBook = this.memory.splice(index, 1)[0];
+      
+              if (this.memory.length === 0) {
+                sendNotification("No hay libros disponibles para alquilar.");
+              } else {
+                sendNotification("La situación de alquiler se ha normalizado.");
+              }
+      
+              return removedBook;
+            } else {
+              throw new Error("Libro no encontrado");
+            }
+          } catch (error) {
+            throw error;
+          }
+        };
+     
+        getByCode = async (code) => {
+          try {
+            const book = this.memory.find((b) => b.code === code);
+      
+            if (book) {
+              return book;
+            } else {
+              throw new Error("Libro no encontrado");
+            }
           } catch (error) {
             throw error;
           }
         };
 }
-export default XMemoryDao
+export default bookMemoryDao

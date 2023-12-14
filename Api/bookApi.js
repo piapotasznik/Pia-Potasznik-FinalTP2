@@ -1,56 +1,52 @@
-// class XApi {
-//   constructor() {
-//     this.memory = [];
-//   }
-
-//   create = async (info) => {
-//     try {
-//       this.memory.push(info);
-//       return await info;
-//     } catch (error) {
-//       throw error;
-//     }
-//   };
-// }
-
-// export default XApi;
-
-// ------------------------------
 import Factory from "../DAOs/Factory.js";
 import { MODO } from "../config/config.js";
+import { validateBookData } from "../utils/validations.js"; 
+import bookMemoryDao from "../DAOs/Memory/bookMemoryDao.js";
 
-class XApi {
+class bookApi {
   constructor() {
     this.factory = Factory.factory(MODO);
   }
 
-  create = async (info) => {
-    try {
-      //validar la info
-      const data = await this.factory.xDao.create(info);
-      return await data;
-    } catch (error) {
-      throw error;
-    }
-  };
-  getAll = async () => {
-    try {
-      //validar la info
-      const data = await this.factory.xDao.getAll();
-      return await data;
-    } catch (error) {
-      throw error;
-    }
-  };
-  getAmount = async (amount) => {
-    try {
-      //validar la info
-      const data = await this.factory.xDao.getAmount(amount);
-      return await data;
-    } catch (error) {
-      throw error;
-    }
-  };
+create = async (book) => {
+  try {
+
+    validateBookData(book);
+    book.state = "disponible";
+
+    const data = await this.factory.bookMemoryDao.create(book);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+getAll = async () => {
+  try {
+    const data = await this.factory.bookMemoryDao.getAll();
+    return await data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+remove = async (code) => {
+  try {
+    const data = await this.factory.bookMemoryDao.remove(code);
+    return await data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+getByCode = async (code) => {
+  try {
+    const data = await this.factory.bookMemoryDao.getByCode(code);
+    return await data;
+  } catch (error) {
+    throw error;
+  }
+};
 }
 
-export default XApi;
+export default bookApi;

@@ -1,37 +1,49 @@
-import XApi from "../Api/XApi.js";
+import bookApi from "../Api/bookApi.js";
 
-class XController {
+class bookController {
   constructor() {
-    this.xApi = new XApi();
+    this.bookApi = new bookApi();
   }
 
   create = async (req, res) => {
     try {
-      const { info } = req.body;
-      if (!info) throw new Error("no hay info");
-      const data = await this.xApi.create(info);
-      res.status(200).send({ message: data });
+      const { book } = req.body;  
+      if (!book) throw new Error("No se proporcionaron datos del libro");
+      const data = await this.bookApi.create(book);
+      res.status(201).send({ message: data });  
     } catch (error) {
-      res.status(422).send({ message: error.message });
+      res.status(422).send({ errorMsg: error.message });
     }
   };
-  getAll= async (req, res) => {
+
+  getAll = async (req, res) => {
     try {
-      const data = await this.xApi.getAll();
+      const data = await this.bookApi.getAll();
       res.status(200).send({ message: data });
     } catch (error) {
-      res.status(422).send({ message: error.message });
+      res.status(422).send({ errorMsg: error.message });
     }
   };
-  getAmount= async (req, res) => {
+
+  remove = async (req, res) => {
     try {
-     const {amount}= req.params
-      const data = await this.xApi.getAmount(amount)
+      const { code } = req.params;
+      const data = await this.bookApi.remove(code);
       res.status(200).send({ message: data });
     } catch (error) {
-      res.status(422).send({ message: error.message });
+      res.status(422).send({ errorMsg: error.message });
+    }
+  };
+
+  getByCode = async (req, res) => {
+    try {
+      const { code } = req.params;
+      const data = await this.bookApi.getByCode(code);
+      res.status(200).send({ message: data });
+    } catch (error) {
+      res.status(422).send({ errorMsg: error.message });
     }
   };
 }
 
-export default XController;
+export default bookController;

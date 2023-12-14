@@ -1,9 +1,9 @@
 import { Router } from "express";
-import xRoutes from "./xRoutes.js";  // CAMBIAR POR EL NOMBRE
+import bookRoutes from "./bookRoutes.js";  
 
 const router= Router()
 
-//tantos  router.use como entidades tenga. ej routes.use("/users",userRoutes)
-router.use("/x", xRoutes)
+//tantos  router.use como entidades tenga.
+router.use("/books", bookRoutes)
 
 export default router
